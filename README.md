@@ -5,7 +5,7 @@ stacks: vue2, vuerouter, axios, vuex, vuetify
 
 ## Usage
 
-**This project is still working**
+**This project is still deveoping**
 
 ## Project setup, test, depoly
 ```
