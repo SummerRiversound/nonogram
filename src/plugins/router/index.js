@@ -9,6 +9,12 @@ import NotFound from '@/pages/error/error404'
 import Dashboard from '@/pages/dashboard'
 
 import Login from '@/pages/login'
+
+import Nonogram from '@/pages/nonogram'
+import Stages from '@/pages/menu/stages'
+import Achievements from '@/pages/menu/achievements'
+import Options from '@/pages/menu/options'
+
 Vue.use(VueRouter)
 
 const router = new VueRouter({
@@ -33,8 +39,28 @@ const router = new VueRouter({
             path: '/dashboard',
             name: 'Dashboard',
             component: Dashboard,
-            // beforeEnter: AuthCheck
-        }
+        },
+        {
+            path: '/nonogram/:stage_id',
+            name: 'Nonogram',
+            component: Nonogram,
+        },
+        {
+            path: '/stages',
+            name: 'Stages',
+            component: Stages
+        },
+        {
+            path: '/options',
+            name: 'Options',
+            component: Options
+        },
+        {
+            path: '/achievements',
+            name: 'Achievements',
+            component: Achievements
+        },
+
     ]
 })
 

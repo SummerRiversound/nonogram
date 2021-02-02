@@ -3,7 +3,7 @@
     <v-main>
       <loading-indicator/>
       <toast/>
-      <router-view/>
+      <router-view :w="appWidth" :h="appHeight"/>
 
     </v-main>
 
@@ -23,7 +23,14 @@ export default {
   },
 
   data: () => ({
-    //
+    appWidth:innerWidth,
+    appHeight:innerHeight
   }),
+  created(){
+    window.addEventListener('resize',()=>{
+      this.appWidth = window.innerWidth
+      this.appHeight = window.innerHeight
+    })
+  }
 };
 </script>
