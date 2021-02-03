@@ -1,5 +1,5 @@
 <template>
-  <v-app>
+  <v-app class="off-drag">
     <v-main>
       <loading-indicator/>
       <toast/>
@@ -34,3 +34,13 @@ export default {
   }
 };
 </script>
+<style>
+
+.off-drag{
+  -ms-user-select: none;
+  -moz-user-select: -moz-none;
+  -khtml-user-select: none;
+  -webkit-user-select: none;
+  user-select: none;
+}
+</style>

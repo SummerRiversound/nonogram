@@ -1,8 +1,8 @@
 <template>
         <table>
-            <tr v-for="(row, rowIndex) in sideHints" :key="`side-hints-row-${rowIndex}`">
+            <tr v-for="(row, row_i) in sideHints" :key="`side-hints-row-${row_i}`">
                 <td>
-                    <span v-for="(col, colIndex) in row" :key="`side-hints-col-${colIndex}`" class="ma-1">
+                    <span v-for="(col, col_i) in row" :key="`side-hints-col-${col_i}`" class="ma-1"  :class="checkAnswerWithHint(row_i, col_i)?'complete':''">
                         {{col}}
                     </span>
                 </td>
@@ -13,8 +13,14 @@
 <script>
 export default {
     props:[
-        'sideHints'
-    ]
+        'sideHints',
+        'sideHintsStatus'
+    ],
+    methods:{
+        checkAnswerWithHint(row, col){
+            return !!(this.sideHints[row][col] == this.sideHintsStatus[row][col]) || false
+        }
+    }
 
 }
 </script>
@@ -34,5 +40,8 @@ td{
 }
 .full-h{
     height:100%;
+}
+.complete{
+    color:darkgrey
 }
 </style>

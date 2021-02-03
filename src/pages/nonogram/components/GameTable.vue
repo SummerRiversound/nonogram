@@ -1,10 +1,8 @@
 <template>
-    <table>
+    <table  :key="clicked" @touchmove="touchGameTableEvt" @touchend="resetLastClick">
         <tr v-for="(row, row_i) in answer" :key="`row-${row_i}`">
-            <td v-for="(col, col_i) in row" :key="`col-${col_i}`" @v-touch="{
-                move: () => touchCellEvnt(row_i, col_i,$event)
-            }">
-                <div :class="`cell-item ${checkCellType(col)}`"  :row="row_i" :col="col_i" />
+            <td v-for="(col, col_i) in row" :key="`col-${col_i}`"  @mousemove="dragCellEvt(row_i, col_i, $event)" @mouseup="resetLastClick" @click.once="clickCellEvt(row_i, col_i, $event)" >
+                <div :class="`cell-item ${checkCellType(col)}`"  :row="row_i" :col="col_i"/>
             </td>
         </tr>
     </table>
@@ -14,85 +12,78 @@ import CellType from './cell_type.js'
 export default {
     props: [
         'type',
-        'answer'
+        'answer',
+        'clicked',
+
     ],
-    created() {
-        console.log(this.answer)
+    data(){
+        return {
+            lastClick:{
+            row:-1,
+            col:-1
+        }
+        }
     },
     methods: {
         checkCellType(cell) {
             return CellType[cell]
         },
-        // clickCellEvt(row_i, col_i,evt) {
-        //     if(!evt.which) return
-        //     this.$emit("update", {
-        //         row: row_i,
-        //         col: col_i
-        //     })
-        // },
-        touchCellEvt(row_i, col_i,evt) {
-            console.log(evt)
-            // console.log(evt.target.attributes.row.value)
-            // console.log(evt.target.attributes.col.value)
-            console.log(row_i)
-            console.log(col_i)
+        clickCellEvt(row_i, col_i,evt) {
+            if(!evt.which) return
             this.$emit("update", {
                 row: row_i,
                 col: col_i
             })
         },
-        onMouseDown(evt) {
+        dragCellEvt(row_i, col_i,evt) {
+            if(this.lastClick.row == row_i && this.lastClick.col == col_i) return
+            if(!evt.which) return
+            this.lastClick = {row:row_i,col:col_i}
+            this.$emit("update", {
+                row: row_i,
+                col: col_i
+            })
+        },
+        touchGameTableEvt(evt){
 
-            //if()
-            this.startPoint = {
-                x: evt.pageX,
-                y: evt.pageY
+            const point = {
+                x: evt.changedTouches[0].clientX,
+                y: evt.changedTouches[0].clientY
             }
-            // Start listening for mouse move and up events
-            // window.addEventListener('mousemove', this.onMouseMove)
-            this.$refs.cell.$on('mousemove',this.onMouseMove)
-            // window.addEventListener('mouseup', this.onMouseUp, {
-            //     once: true
-            // })
+            const target = window.document.elementFromPoint(point.x, point.y)
+             if (!!target && target.classList.contains('cell-item')) {
+                    const row = target.attributes.row.value
+                    const col = target.attributes.col.value
+                    if(this.lastClick.row == row && this.lastClick.col == col) return
+                    this.lastClick = {row:row,col:col}
+                    this.$emit("update", {
+                        row: row,
+                        col: col
+                    })
+             }
         },
-        onMouseMove(evt) {
-            // Update the end point position
-            if (this.mouseDown) {
-                this.endPoint = {
-                    x: evt.pageX,
-                    y: evt.pageY
+        isItemSelected (el, point) {
+            if (el.classList.contains('cell-item')) {
+                const box = {
+                    top: el.offsetTop,
+                    left: el.offsetLeft,
+                    width: el.clientWidth,
+                    height: el.clientHeight
                 }
-                const children = this.$children.length ?
-                    this.$children :
-                    this.$el.children
-                if (children) {
-                    // const selected = Array.from(children).filter((item) => {
-                    //     return this.isItemSelected(item.$el || item)
-                    // })
-                    console.log(children)
-                    // If shift was held during mousedown the new selection is added to the current. Otherwise the new selection
-                    // will be selected
-                }
+                return !!(
+                    point.x >= box.left &&
+                    point.x <= box.left + box.width &&
+                    point.y >= box.top &&
+                    point.y <= box.top + box.height
+                )
             }
+            return false
         },
-        onMouseUp() {
-            // Clean up event listeners
-            window.removeEventListener('mousemove', this.onMouseMove)
-            // window.removeEventListener('mouseup', this.onMouseUp)
-            // Reset state
-            // this.mouseDown = false
-            // this.concat = false
-            // this.startPoint = null
-            // this.endPoint = null
-        },
-        dragged() {
-            console.log('드래그')
-        },
-        dragenter() {
-            console.log('드래그엔터')
-        },
-        clickStop() {
-            console.log('클릭스탑')
+        resetLastClick(){
+            this.lastClick={
+                row:-1,
+                col:-1
+            }
         }
     }
 }

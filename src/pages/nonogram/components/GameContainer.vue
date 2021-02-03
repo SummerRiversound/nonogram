@@ -5,15 +5,15 @@
             <tr>
                 <td style="width:18vw"></td>
                 <td colspan="5" style="width:80vw">
-                    <TopHints :topHints="topHints"></TopHints>
+                    <TopHints :topHints="topHints" :topHintsStatus="topHintsStatus"></TopHints>
                 </td>
             </tr>
             <tr>
                 <td style="width:18vw;height:80vw">
-                    <SideHints :sideHints="sideHints"></SideHints>
+                    <SideHints :sideHints="sideHints" :sideHintsStatus="sideHintsStatus"></SideHints>
                 </td>
                 <td style="width:80vw;height:80vw">
-                    <GameTable :answer="answer" :drawmode="drawmode" @update="updateAnswer" :key="clicked"></GameTable>
+                    <GameTable :answer="answer" :drawmode="drawmode" @update="updateAnswer" :clicked="clicked"></GameTable>
                 </td>
             </tr>
         </table>
@@ -36,7 +36,6 @@ export default {
         'type',
         'drawmode',
         'stage_id',
-
     ],
     data() {
         return {
@@ -45,15 +44,27 @@ export default {
             answer: [],
             sideHints: [],
             topHints: [],
-            clicked:0
+            clicked:0,
+            sideHintsStatus:[],
+            topHintsStatus:[],
+            complete: false
+        }
+    },
+    watch:{
+        clicked(){
+            this.sideHintsStatus = this.getSideClues(this.answer)
+            this.topHintsStatus = this.getTopClues(this.answer)
+            this.checkComplete(this.answer, this.solution)
         }
     },
     created() {
         this.answer = this.resetAnswer(this.type)
         this.stage = Stages[this.type][this.stage_id-1]
         this.solution = this.stage.solution
-        this.sideHints = this.getSideClues(this.stage.solution);
-        this.topHints = this.getTopClues(this.stage.solution);
+        this.sideHintsStatus = this.getSideClues(this.answer)
+        this.topHintsStatus = this.getTopClues(this.answer)
+        this.sideHints = this.getSideClues(this.solution);
+        this.topHints = this.getTopClues(this.solution);
     },
     methods: {
         resetAnswer(type){
@@ -70,11 +81,11 @@ export default {
                 const columnClues = [];
                 solution.forEach((row, rowIndex) => {
                     const cell = row[colIndex];
-                    if (consecutive && !cell) {
+                    if (consecutive && !(cell==1)) {
                         columnClues.push(consecutive);
                         consecutive = 0;
                     }
-                    if (cell) {
+                    if (cell == 1) {
                         consecutive += 1;
                     }
                     if (rowIndex === solution.length - 1) {
@@ -92,11 +103,11 @@ export default {
                 let consecutive = 0;
                 const rowClues = [];
                 row.forEach((cell, index) => {
-                    if (consecutive && !cell) {
+                    if (consecutive && !(cell==1) ) {
                         rowClues.push(consecutive);
                         consecutive = 0;
                     }
-                    if (cell) {
+                    if (cell == 1) {
                         consecutive += 1;
                     }
                     if (index === row.length - 1) {
@@ -112,6 +123,7 @@ export default {
         updateAnswer({row, col}){
             const solution = this.solution
             const answer = this.answer
+            if(answer[row][col]===1 || answer[row][col] ===2) return
             if(this.drawmode) {
                 this.checkAnswer(row, col, solution, answer)
                 this.clicked++
@@ -127,8 +139,6 @@ export default {
                 return
             }
             answer[row][col] = 2
-
-
         },
         removeOrExclude(row, col, answer){
             if(answer[row][col]==3) {
@@ -136,6 +146,12 @@ export default {
                 return
             }
             answer[row][col] = 3
+        },
+        checkComplete(answer, solution){
+            const res = answer.every((row, row_i)=>{
+                return row.every((col, col_i)=> col==1?true:false == solution[row_i][col_i] )
+            })
+            if(res) this.$emit("completed")
 
         }
     }
