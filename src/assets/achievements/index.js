@@ -10,7 +10,7 @@ export default {
         },
         {
             name: {
-                kr:"다섯칸은 이제 ",
+                kr:"5x5는 누워서 떡먹기지",
                 en:"X",
             },
             detail: '처음 스테이지 클리어'
