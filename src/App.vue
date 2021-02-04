@@ -4,9 +4,7 @@
       <loading-indicator/>
       <toast/>
       <router-view :w="appWidth" :h="appHeight"/>
-
     </v-main>
-
   </v-app>
 </template>
 

@@ -97,8 +97,8 @@ export default {
     }
     td {
         border: 1px solid #EDEDF2;
-        width: 50px;
-        height: 50px;
+        width: 17px;
+        height: 17px;
     }
     .cell-item.not {
         width: 100%;;

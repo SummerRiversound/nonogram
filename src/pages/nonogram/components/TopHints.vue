@@ -33,7 +33,9 @@ table{
 td{
     text-align: center;
     background-color:#ECEFF7;
-    /* width: 50px; */
+    width: 50px;
+    font-size:12px;
+    letter-spacing:-2px;
 }
 .complete{
     color:darkgrey

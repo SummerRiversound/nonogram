@@ -13,7 +13,7 @@ import Login from '@/pages/login'
 import Nonogram from '@/pages/nonogram'
 import Stages from '@/pages/menu/stages'
 import Achievements from '@/pages/menu/achievements'
-import Options from '@/pages/menu/options'
+import Settings from '@/pages/menu/settings'
 
 Vue.use(VueRouter)
 
@@ -41,7 +41,7 @@ const router = new VueRouter({
             component: Dashboard,
         },
         {
-            path: '/nonogram/:stage_id',
+            path: '/nonogram/:celltype/:stage_id',
             name: 'Nonogram',
             component: Nonogram,
         },
@@ -51,9 +51,9 @@ const router = new VueRouter({
             component: Stages
         },
         {
-            path: '/options',
-            name: 'Options',
-            component: Options
+            path: '/settings',
+            name: 'Settings',
+            component: Settings
         },
         {
             path: '/achievements',

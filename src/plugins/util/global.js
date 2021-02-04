@@ -1,6 +1,30 @@
 import { store as $store } from '@/plugins/store'
 import * as $http from 'axios'
 
+export const Sounds = {
+    install(Vue) {
+        const sourcePath = {
+            success: require('@/assets/sounds/se/success_1.wav'),
+            miss:  require('@/assets/sounds/se/miss.wav'),
+            exclude: require('@/assets/sounds/se/exclude.wav')
+        }
+        Vue.prototype.$sounds = {
+            success () {
+                new Audio(sourcePath.success).play()
+                navigator.vibrate(30)
+            },
+            miss () {
+                new Audio(sourcePath.miss).play()
+                navigator.vibrate(50)
+            },
+            exclude () {
+                new Audio(sourcePath.exclude).play()
+                navigator.vibrate(10)
+            },
+        }
+    }
+}
+
 export const Toast = {
     install(Vue) {
         let payload = function(msg, color, type) {

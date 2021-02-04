@@ -37,6 +37,9 @@ tr{
 }
 td{
     text-align: right;
+    white-space:nowrap;
+    font-size:12px;
+    letter-spacing:-2px;
 }
 .full-h{
     height:100%;

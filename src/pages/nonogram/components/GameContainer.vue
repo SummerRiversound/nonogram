@@ -3,16 +3,16 @@
         <!-- <Hints :sideHints="leftHints" :topHints="topHints"></Hints> -->
         <table class="game_wrapper">
             <tr>
-                <td style="width:18vw"></td>
+                <td style="width:15vw"></td>
                 <td colspan="5" style="width:80vw">
                     <TopHints :topHints="topHints" :topHintsStatus="topHintsStatus"></TopHints>
                 </td>
             </tr>
             <tr>
-                <td style="width:18vw;height:80vw">
+                <td style="width:15vw;height:80vw">
                     <SideHints :sideHints="sideHints" :sideHintsStatus="sideHintsStatus"></SideHints>
                 </td>
-                <td style="width:80vw;height:80vw">
+                <td style="width:83vw;height:80vw">
                     <GameTable :answer="answer" :drawmode="drawmode" @update="updateAnswer" :clicked="clicked"></GameTable>
                 </td>
             </tr>
@@ -24,7 +24,7 @@ import GameTable from './GameTable'
 import TopHints from './TopHints'
 import SideHints from './SideHints'
 import Stages from '@/assets/stages/index'
-
+// import Sounds from '@/sounds'
 
 export default {
     components:{
@@ -65,6 +65,9 @@ export default {
         this.topHintsStatus = this.getTopClues(this.answer)
         this.sideHints = this.getSideClues(this.solution);
         this.topHints = this.getTopClues(this.solution);
+    },
+    mounted(){
+
     },
     methods: {
         resetAnswer(type){
@@ -136,11 +139,14 @@ export default {
         checkAnswer(row, col, solution, answer){
             if(solution[row][col]){
                 answer[row][col] = 1
+                this.$sounds.success()
                 return
             }
             answer[row][col] = 2
+            this.$sounds.miss()
         },
         removeOrExclude(row, col, answer){
+            this.$sounds.exclude()
             if(answer[row][col]==3) {
                 answer[row][col] = 0
                 return
@@ -152,7 +158,6 @@ export default {
                 return row.every((col, col_i)=> col==1?true:false == solution[row_i][col_i] )
             })
             if(res) this.$emit("completed")
-
         }
     }
 }
