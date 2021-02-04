@@ -2,17 +2,22 @@
     <v-container class="pa-1" fluid>
         <v-row align="center" align-content="center" v-if="!!(celltype) && !!(stage_id)">
             <v-col cols="12">
-                <v-app-bar flat>
+                <v-app-bar flat color="#495689" dark>
                     <v-btn icon @click="closeGame">
                         <v-icon>mdi-arrow-left</v-icon>
                     </v-btn>
                     <v-spacer />
-                    {{complete?'클리어!':''}}
+                    <h2 style='font-size:18px;color:white;text-align:center;vertical-align: middle;'>{{timecode}}</h2>
+                    <!-- {{celltype+'X'+celltype}} STAGE No.{{stage_id}} -->
                     <v-spacer></v-spacer>
                     <v-btn icon>
                         <v-icon>mdi-cog</v-icon>
                     </v-btn>
                 </v-app-bar>
+            </v-col>
+                        </v-row>
+        <v-row align="center" align-content="center">
+            <v-col class="text-center">
                 <GameContainer :type="celltype" :drawmode="drawmode" :stage_id="stage_id" @completed="gotCompleted"></GameContainer>
                 <div class="resp_switch_wrap" :style="`margin-top:${0.1*w}px`">
                     <v-switch v-model="drawmode" inset class="resp_switch" :style="`transform:scale(${0.003*w})`" :prepend-icon="drawmode?'mdi-pencil':'mdi-close'"></v-switch>
@@ -56,10 +61,11 @@ export default {
             // type:5,
             complete: false,
             drawmode:true,
+            timecode:''
         }
     },
     created(){
-        console.log(this.type)
+        this.setTimer(500000)
     },
     computed:{
         stage_id(){
@@ -85,6 +91,19 @@ export default {
 
 
             this.complete = true
+        },
+        setTimer(time){
+            const allSec = time/1000
+            const min = allSec/60
+            const sec = allSec%60
+            this.timecode = `${min} : ${sec}`
+            this.runTimer(time)
+        },
+        runTimer(time){
+            let interval = setInterval(()=>{
+                this.setTimer(time-1000)
+                if(time<1000) clearInterval(interval)
+            },1000)
         }
     }
 
