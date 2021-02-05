@@ -1,10 +1,17 @@
 <template>
   <v-app class="off-drag">
     <v-main>
-      <loading-indicator/>
+      <transition
+      name="fade"
+      mode="out-in"
+      @beforeLeave="beforeLeave"
+      @enter="enter">
+        <router-view :w="appWidth" :h="appHeight"/>
+      </transition>
+                  <loading-indicator/>
       <toast/>
-      <router-view :w="appWidth" :h="appHeight"/>
     </v-main>
+
   </v-app>
 </template>
 
@@ -21,14 +28,26 @@ export default {
   },
 
   data: () => ({
-    appWidth:innerWidth,
-    appHeight:innerHeight
+    appWidth: innerWidth,
+    appHeight: innerHeight
   }),
-  created(){
-    window.addEventListener('resize',()=>{
+  created() {
+    window.addEventListener('resize', () => {
       this.appWidth = window.innerWidth
       this.appHeight = window.innerHeight
     })
+  },
+  methods: {
+    beforeLeave(element) {
+      this.prevHeight = getComputedStyle(element).height;
+    },
+    enter(element) {
+      const { height } = getComputedStyle(element);
+      element.style.height = this.prevHeight;
+      setTimeout(() => {
+        element.style.height = height;
+      });
+    },
   }
 };
 </script>
@@ -40,5 +59,20 @@ export default {
   -khtml-user-select: none;
   -webkit-user-select: none;
   user-select: none;
+}
+
+
+.fade-enter-active,
+.fade-leave-active {
+  transition-duration: 0.3s;
+  transition-property: opacity;
+  transition-property: height, opacity;
+  transition-timing-function: ease;
+  overflow: hidden;
+}
+
+.fade-enter,
+.fade-leave-active {
+  opacity: 0
 }
 </style>

@@ -26,7 +26,7 @@
         </v-row>
         <v-dialog v-model="complete">
             <v-card >
-                <v-row style='height:51px;background:#eff1fa;margin:0;padding:0;margin-bottom:36px;'>
+                <v-row style= 'height:51px;background:#eff1fa;margin:0;padding:0;margin-bottom:36px;'>
                       <h2 style='font-size:bold;color:#34383e;font-size:18px;padding-top:12px;padding-left:18px;'>{{celltype+'X'+celltype}} STAGE No.{{stage_id}}</h2>
                 </v-row>
                 <v-row style='margin:0;padding:0;margin-bottom:42px;text-align:center;'>
@@ -61,11 +61,12 @@ export default {
             // type:5,
             complete: false,
             drawmode:true,
-            timecode:''
+            timecode:'',
+            // sec:0
         }
     },
     created(){
-        this.setTimer(500000)
+        this.setTimer(this.celltype)
     },
     computed:{
         stage_id(){
@@ -88,21 +89,24 @@ export default {
         gotCompleted(){
             this.$confetti.start()
             setTimeout(()=>{this.$confetti.stop()},1500)
-
-
             this.complete = true
         },
-        setTimer(time){
-            const allSec = time/1000
-            const min = allSec/60
-            const sec = allSec%60
-            this.timecode = `${min} : ${sec}`
+        setTimer(type){
+            let time = 180000
+            if(type == 5) time = 120000
+            if(type == 10) time = 180000
+            if(type == 15) time = 300000
             this.runTimer(time)
         },
-        runTimer(time){
+        runTimer(param){
+            let time = param
             let interval = setInterval(()=>{
-                this.setTimer(time-1000)
-                if(time<1000) clearInterval(interval)
+                const allSec = time/1000
+                const min = parseInt((allSec%3600)/60)
+                const sec = (allSec%60).toString().length==2 ?(allSec%60).toString():'0'+(allSec%60).toString()
+                this.timecode = `${min} : ${sec}`
+                time -= 1000
+                if(time<0 || this.complete) clearInterval(interval)
             },1000)
         }
     }

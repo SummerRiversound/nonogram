@@ -15,7 +15,8 @@ const app = {
             show: false
         },
         sound: true,
-        vibrate:true,
+        vibrate: true,
+
     },
     actions: {
         setLoading({ commit }, payload) {

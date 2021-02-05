@@ -35,12 +35,19 @@
                 <v-col v-for="(stage, index) in stages[type]" :key="`stage-${index}`" class="mt-10"
                     min-width="100">
 
-                    <div :style="`width:92vw;height:92vw;`"
+                    <div :style="`width:92vw;height:92vw;`" v-if="stagesStatus[type][index]"
                         @click="$router.push(`/nonogram/${type}/${index+1}`)" >
                         <div style="text-align:center;font-size:2rem;">
                             {{stage['name']['kr']}}
                         </div>
                         <GameTable :answer="stage['solution']"></GameTable>
+                    </div>
+                    <div :style="`width:92vw;height:92vw;`" v-else
+                        @click="$router.push(`/nonogram/${type}/${index+1}`)" >
+                        <div style="text-align:center;font-size:2rem;">
+                            {{notClearedTitle(stage['name']['kr'].length)}}
+                        </div>
+                        <GameTable :answer="[]"></GameTable>
 
                     </div>
                 </v-col>
@@ -71,10 +78,23 @@ export default {
     computed:{
         type(){
             return (this.typeIndex+1)*5
-        }
+        },
+        stagesStatus () {
+            return this.$store.getters.stages
+        },
     },
     created(){
-        console.log(this.stages[this.type])
+        console.log(this.stagesStatus)
+    },
+    methods:{
+        notClearedTitle(length){
+            let title = ""
+            for(let i =0; i<length ; i++){
+                title+="?"
+            }
+            return title
+
+        }
     }
 }
 </script>

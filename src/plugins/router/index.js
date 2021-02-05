@@ -60,7 +60,6 @@ const router = new VueRouter({
             name: 'Achievements',
             component: Achievements
         },
-
     ]
 })
 

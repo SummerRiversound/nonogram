@@ -1,6 +1,5 @@
 
-export default {
-    achievements: [
+export default [
         {
             name: {
                 kr:"처음만 힘들지",
@@ -29,13 +28,13 @@ export default {
             },
             detail: '15X15 스테이지 모두 클리어'
         },
-        {
-            name: {
-                kr:"20x20도 껌이구만!",
-                en:"X",
-            },
-            detail: '20x20 스테이지 모두 클리어'
-        },
+        // {
+        //     name: {
+        //         kr:"20x20도 껌이구만!",
+        //         en:"X",
+        //     },
+        //     detail: '20x20 스테이지 모두 클리어'
+        // },
         {
             name: {
                 kr:"게임오버 되는 줄 알았지?",
@@ -50,4 +49,3 @@ export default {
             detail: '한 스테이지에서 한시간 경과'
         },
     ]
-}
