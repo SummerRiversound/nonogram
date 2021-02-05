@@ -8,7 +8,6 @@
                     </v-btn>
                     <v-spacer />
                     <h2 style='font-size:18px;color:white;text-align:center;vertical-align: middle;'>{{timecode}}</h2>
-                    <!-- {{celltype+'X'+celltype}} STAGE No.{{stage_id}} -->
                     <v-spacer></v-spacer>
                     <v-btn icon>
                         <v-icon>mdi-cog</v-icon>
@@ -31,12 +30,12 @@
                 </v-row>
                 <v-row style='margin:0;padding:0;margin-bottom:42px;text-align:center;'>
                     <v-col col=12 sm=12>
-                        <h2 style='font-size:15px;color:#505050;text-align:center;vertical-align: middle;'>완료하였습니다!</h2>
+                        <h2 id="dialog-msg">완료하였습니다!</h2>
                     </v-col>
                 </v-row>
-                <v-row style='margin:0;padding:0;' class="text-center">
+                <v-row class="ma-0 pa-0 text-center">
                     <v-col  class="text-center">
-                        <v-btn color='#49a0d5' style='color:#fff;width:181px;height:46px;border-radius:25px;' class='btn' @click="$router.push('/stages')">스테이지선택</v-btn>
+                        <v-btn color='#49a0d5' id="btn-to-stages" @click="$router.push('/stages')">스테이지선택</v-btn>
                     </v-col>
                 </v-row>
             </v-card>
@@ -113,7 +112,7 @@ export default {
 
 }
 </script>
-<style>
+<style scoped>
 .resp_switch{
     width:48px;
     padding:0px;
@@ -121,5 +120,12 @@ export default {
     position:absolute;
     transform-origin:center center;
 }
+#btn-to-stages{
+    color:#fff;
+    width:180px;
+    height:45px;
+    border-radius:25px;
+}
+/* font-size:15px;color:#505050;text-align:center;vertical-align: middle; */
 
 </style>

@@ -22,16 +22,12 @@
             <v-row class="ma-0 mt-0">
                 <v-col>
                     <v-list>
-                    <!-- <v-list-item style="height:66px">
-                        음향효과<v-spacer></v-spacer><v-switch inset ></v-switch>
-                    </v-list-item> -->
                     <div v-for="(achieve, index) in achievements" :key="`achidevement-${index}`">
                         <v-list-item style="height:66px">
                             <span>
                                 <v-img v-if="achievementsStatus[index]" height="60" width="60" contain src="@/assets/achievements/img/2.png"></v-img>
                                 <v-img v-else height="60" width="60" contain src="@/assets/achievements/img/1.png"></v-img>
                             </span>
-                            <!-- <v-spacer></v-spacer> -->
                             {{achieve.name.kr}}
                         </v-list-item>
                         <v-divider></v-divider>

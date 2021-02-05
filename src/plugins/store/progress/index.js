@@ -5,10 +5,12 @@ function fillAchievements() {
     return new Array(Achievements.length).fill(false)
 }
 function fillStages() {
-    return Object.keys(Stages).map(type => {
-        console.log(type)
-        return new Array(Stages[type].length).fill(false)
+    let map = {}
+    Object.keys(Stages).forEach(type => {
+        map[type] = new Array(Stages[type].length).fill(false)
     })
+    console.log(map)
+    return map
 }
 
 

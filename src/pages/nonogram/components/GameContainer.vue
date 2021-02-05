@@ -1,6 +1,5 @@
 <template>
     <div>
-        <!-- <Hints :sideHints="leftHints" :topHints="topHints"></Hints> -->
         <table class="game_wrapper">
             <tr>
                 <td style="width:15vw"></td>

@@ -5,7 +5,6 @@
                 <div :class="`cell-item ${col==true?'got':''}`"/>
             </td>
         </tr>
-        <!-- {{answer}} -->
     </table>
 </template>
 <script>
