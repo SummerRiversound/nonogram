@@ -6,7 +6,7 @@
      <h1 style="color:#24344B">네모네모로직</h1>
     <v-row align="center" justify="center" class="btn-container">
       <v-col cols="10">
-        <v-btn block @click="$router.push('/stages')" class="elevation-6" dark color="#495689">플레이</v-btn>
+        <v-btn block @click="$router.push('/stages/5')" class="elevation-6" dark color="#495689">플레이</v-btn>
       </v-col>
       <v-col cols="10">
         <v-btn block @click="$router.push('/achievements')" class="elevation-6" dark color="#495689">업적</v-btn>

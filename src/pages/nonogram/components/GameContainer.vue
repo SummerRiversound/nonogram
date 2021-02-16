@@ -163,7 +163,6 @@ export default {
 </script>
 <style scoped>
 .game_wrapper{
-
     width:98vw;
 }
 </style>

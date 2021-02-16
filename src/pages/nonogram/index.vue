@@ -7,7 +7,7 @@
                         <v-icon>mdi-arrow-left</v-icon>
                     </v-btn>
                     <v-spacer />
-                    <h2 style='font-size:18px;color:white;text-align:center;vertical-align: middle;'>{{timecode}}</h2>
+                    <h2 class="timecode">{{timecode}}</h2>
                     <v-spacer></v-spacer>
                     <v-btn icon>
                         <v-icon>mdi-cog</v-icon>
@@ -25,17 +25,17 @@
         </v-row>
         <v-dialog v-model="complete">
             <v-card >
-                <v-row style= 'height:51px;background:#eff1fa;margin:0;padding:0;margin-bottom:36px;'>
-                      <h2 style='font-size:bold;color:#34383e;font-size:18px;padding-top:12px;padding-left:18px;'>{{celltype+'X'+celltype}} STAGE No.{{stage_id}}</h2>
+                <v-row class="card-header">
+                      <h2 class="card-header-title">{{celltype+'X'+celltype}} STAGE No.{{stage_id}}</h2>
                 </v-row>
-                <v-row style='margin:0;padding:0;margin-bottom:42px;text-align:center;'>
+                <v-row class="card-contents">
                     <v-col col=12 sm=12>
                         <h2 id="dialog-msg">완료하였습니다!</h2>
                     </v-col>
                 </v-row>
                 <v-row class="ma-0 pa-0 text-center">
                     <v-col  class="text-center">
-                        <v-btn color='#49a0d5' id="btn-to-stages" @click="$router.push('/stages')">스테이지선택</v-btn>
+                        <v-btn color='#49a0d5' id="btn-to-stages" @click="$router.push('/stages/'+celltype)">스테이지선택</v-btn>
                     </v-col>
                 </v-row>
             </v-card>
@@ -61,11 +61,13 @@ export default {
             complete: false,
             drawmode:true,
             timecode:'',
+            counter:0,
             // sec:0
         }
     },
     created(){
         this.setTimer(this.celltype)
+        this.runCounterForAchievement()
     },
     computed:{
         stage_id(){
@@ -81,11 +83,27 @@ export default {
         }
     },
     methods:{
+
         closeGame(){
             if(!confirm("정말 게임을 종료할까요? 진행상태는 저장되지 않습니다")) return
-            this.$router.push('/stages')
+            this.$router.push('/stages/'+this.celltype)
         },
         gotCompleted(){
+            const payload ={
+                type: this.celltype,
+                index: this.stage_id-1
+            }
+            this.$store.dispatch("setStageClear",payload)
+            this.$bus.$emit("checkAchievement", 0)
+            if(payload.type==5){
+                this.$bus.$emit("checkAchievement", 1)
+            }
+            if(payload.type==10){
+                this.$bus.$emit("checkAchievement", 2)
+            }
+            if(payload.type==15){
+                this.$bus.$emit("checkAchievement", 3)
+            }
             this.$confetti.start()
             setTimeout(()=>{this.$confetti.stop()},1500)
             this.complete = true
@@ -105,9 +123,24 @@ export default {
                 const sec = (allSec%60).toString().length==2 ?(allSec%60).toString():'0'+(allSec%60).toString()
                 this.timecode = `${min} : ${sec}`
                 time -= 1000
-                if(time<0 || this.complete) clearInterval(interval)
+                if(time<0 || this.complete) {
+                    if(time<0)  this.$bus.$emit("checkAchievement", 4)
+
+                    clearInterval(interval)
+                    }
             },1000)
-        }
+        },
+        runCounterForAchievement(){
+            let interval = setInterval(()=>{
+                this.counter ++
+                if(this.counter>3600){
+                    this.$bus.$emit("checkAchievement", 5)
+                    clearInterval(interval)
+                }
+
+            },1000)
+        },
+
     }
 
 }
@@ -126,6 +159,20 @@ export default {
     height:45px;
     border-radius:25px;
 }
-/* font-size:15px;color:#505050;text-align:center;vertical-align: middle; */
+.timecode{
+    font-size:18px;
+    color:white;
+    text-align:center;
+    vertical-align: middle;
+}
+.card-header{
+    height:51px;background:#eff1fa;margin:0;padding:0;margin-bottom:36px;
+}
+.card-header-title{
+    font-size:bold;color:#34383e;font-size:18px;padding-top:12px;padding-left:18px;
+}
+.card-contents{
+    margin:0;padding:0;margin-bottom:42px;text-align:center;
+}
 
 </style>

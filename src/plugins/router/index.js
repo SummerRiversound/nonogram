@@ -39,9 +39,9 @@ const router = new VueRouter({
             component: Nonogram,
         },
         {
-            path: '/stages',
+            path: '/stages/:celltype',
             name: 'Stages',
-            component: Stages
+            component: Stages,
         },
         {
             path: '/settings',

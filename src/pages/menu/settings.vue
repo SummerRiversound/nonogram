@@ -16,11 +16,15 @@
             <v-col class="text-center">
                 <v-list>
                     <v-list-item style="height:66px">
-                        음향효과<v-spacer></v-spacer><v-switch inset ></v-switch>
+                        음향효과<v-spacer></v-spacer><v-switch inset :input-value="soundEffect" @change="$store.dispatch('toggleSoundSetting')"></v-switch>
                     </v-list-item>
                     <v-divider></v-divider>
                     <v-list-item style="height:66px">
                         어플리케이션 정보<v-spacer></v-spacer><v-icon>mdi-information</v-icon>
+                    </v-list-item>
+                    <v-divider></v-divider>
+                    <v-list-item style="height:66px">
+                        제작자 <v-spacer></v-spacer>하은-Haeun
                     </v-list-item>
                 </v-list>
             </v-col>
@@ -46,7 +50,14 @@ export default {
             typeIndex:0
         }
     },
-    created(){
+    computed:{
+        soundEffect(){
+            return this.$store.getters.sound
+        }
+    },
+    mounted(){
+        console.log("이게왜뜨지?")
+        this.$bus.$emit("checkAchievement", 7)
     }
 }
 </script>

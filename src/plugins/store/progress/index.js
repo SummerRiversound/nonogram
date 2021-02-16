@@ -39,7 +39,7 @@ const progress = {
             state.achievements[index] = true
         },
         setStageClear(state, { type, index }) {
-            state.stage[type][index] = true
+            state.stages[type][index] = true
         }
     }
 }

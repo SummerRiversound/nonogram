@@ -18,20 +18,20 @@
         <v-row align="center" align-content="center">
             <v-col class="text-center">
                 <v-btn-toggle v-model="typeIndex" mandatory>
-                    <v-btn>
+                    <v-btn @click="$router.replace('/stages/5')">
                         5X5
                     </v-btn>
-                    <v-btn>
+                    <v-btn  @click="$router.replace('/stages/10')">
                         10X10
                     </v-btn>
-                    <v-btn>
+                    <v-btn  @click="$router.replace('/stages/15')">
                         15X15
                     </v-btn>
                 </v-btn-toggle>
             </v-col>
         </v-row>
         <perfect-scrollbar :style="{height:'70vh'}">
-            <v-row class="ma-0 mt-0" v-if="!!(type)">
+            <v-row class="ma-0 mt-0" v-if="!!(type)" :key="refresh">
                 <v-col v-for="(stage, index) in stages[type]" :key="`stage-${index}`" class="mt-10"
                     min-width="100">
 
@@ -63,6 +63,7 @@ import 'vue2-perfect-scrollbar/dist/vue2-perfect-scrollbar.css'
 import GameTable from './components/GameTable-mini'
 import Stages from '@/assets/stages'
 export default {
+    name:'Stages',
     components:{
         GameTable,
         PerfectScrollbar
@@ -71,8 +72,15 @@ export default {
 
         return{
             stages: Stages,
-            typeIndex:0
+            typeIndex:0,
+            refresh:0
         }
+    },
+    created(){
+        this.typeIndex = this.celltype
+    },
+    mounted(){
+        this.refresh++
     },
     computed:{
         type(){
@@ -80,6 +88,9 @@ export default {
         },
         stagesStatus () {
             return this.$store.getters.stages
+        },
+        celltype(){
+            return (this.$route.params.celltype/5)-1
         },
     },
     methods:{

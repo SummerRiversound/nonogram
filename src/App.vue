@@ -6,9 +6,12 @@
       mode="out-in"
       @beforeLeave="beforeLeave"
       @enter="enter">
+      <!-- <keep-alive include="Stages"> -->
         <router-view :w="appWidth" :h="appHeight"/>
+      <!-- </keep-alive> -->
       </transition>
-                  <loading-indicator/>
+      <achievements-listner/>
+      <loading-indicator/>
       <toast/>
     </v-main>
 
@@ -18,13 +21,15 @@
 <script>
 import LoadingIndicator from './components/loading-indicator';
 import Toast from './components/toast'
+import AchievementsListner from './components/achievements-listner'
 
 export default {
   name: 'App',
 
   components: {
     LoadingIndicator,
-    Toast
+    Toast,
+    AchievementsListner
   },
 
   data: () => ({

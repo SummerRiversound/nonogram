@@ -9,15 +9,18 @@ export const Sounds = {
             exclude: require('@/assets/sounds/se/exclude.wav')
         }
         Vue.prototype.$sounds = {
-            success () {
+            success() {
+                if(!$store.getters.sound) return
                 new Audio(sourcePath.success).play()
                 navigator.vibrate(30)
             },
-            miss () {
+            miss() {
+                if(!$store.getters.sound) return
                 new Audio(sourcePath.miss).play()
                 navigator.vibrate(50)
             },
-            exclude () {
+            exclude() {
+                if(!$store.getters.sound) return
                 new Audio(sourcePath.exclude).play()
                 navigator.vibrate(10)
             },

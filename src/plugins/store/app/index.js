@@ -28,6 +28,9 @@ const app = {
         },
         removeToast({ commit }) {
             return commit('setToast', { show: false })
+        },
+        toggleSoundSetting({ commit }) {
+            return commit('toggleSoundSetting')
         }
     },
     getters: {
@@ -36,6 +39,12 @@ const app = {
         },
         toast(state) {
             return state.toast
+        },
+        sound(state) {
+            return state.sound
+        },
+        vibrate(state) {
+            return state.vibrate
         }
     },
     mutations: {
@@ -55,6 +64,9 @@ const app = {
             if (payload.show !== undefined) state.toast.show = payload.show
             if (payload.color !== undefined) state.toast.color = payload.color
         },
+        toggleSoundSetting(state) {
+            state.sound = !state.sound
+        }
     }
 }
 

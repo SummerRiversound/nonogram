@@ -29,7 +29,9 @@
                                 <v-img v-else height="60" width="60" contain src="@/assets/achievements/img/1.png"></v-img>
                             </span>
                             {{achieve.name.kr}}
+
                         </v-list-item>
+                        <div class="achieve-detail">{{achieve.detail}}</div>
                         <v-divider></v-divider>
                     </div>
                 </v-list>
@@ -59,7 +61,9 @@ export default {
             return this.$store.getters.achievements
         },
     },
-    created(){
+    mounted(){
+
+        this.$bus.$emit("checkAchievement", 6)
     }
 }
 </script>
@@ -74,5 +78,10 @@ export default {
     height:200px;
     background-image: url("~@/assets/achievements/img/logo.png");
     background-position: center;
+}
+.achieve-detail{
+    text-align: right;
+    font-size:12px;
+    color: #575757;
 }
 </style>
