@@ -9,7 +9,6 @@ function fillStages() {
     Object.keys(Stages).forEach(type => {
         map[type] = new Array(Stages[type].length).fill(false)
     })
-    console.log(map)
     return map
 }
 
@@ -32,7 +31,7 @@ const progress = {
             return state.achievements
         },
         stages(state) {
-            return state.stage
+            return state.stages
         },
     },
     mutations: {

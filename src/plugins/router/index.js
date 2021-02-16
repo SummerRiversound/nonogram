@@ -8,8 +8,6 @@ import NotFound from '@/pages/error/error404'
 
 import Dashboard from '@/pages/dashboard'
 
-import Login from '@/pages/login'
-
 import Nonogram from '@/pages/nonogram'
 import Stages from '@/pages/menu/stages'
 import Achievements from '@/pages/menu/achievements'
@@ -29,11 +27,6 @@ const router = new VueRouter({
             path: '/',
             name: 'Landing',
             component: Landing
-        },
-        {
-            path: '/login',
-            name: 'Login',
-            component: Login
         },
         {
             path: '/dashboard',

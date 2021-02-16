@@ -31,24 +31,23 @@
             </v-col>
         </v-row>
         <perfect-scrollbar :style="{height:'70vh'}">
-            <v-row class="ma-0 mt-0">
+            <v-row class="ma-0 mt-0" v-if="!!(type)">
                 <v-col v-for="(stage, index) in stages[type]" :key="`stage-${index}`" class="mt-10"
                     min-width="100">
 
-                    <div :style="`width:92vw;height:92vw;`" v-if="stagesStatus[type][index]"
+                    <div class="stage-wrapper" v-if="stagesStatus[type][index]"
                         @click="$router.push(`/nonogram/${type}/${index+1}`)" >
-                        <div style="text-align:center;font-size:2rem;">
+                        <div class="stage-title">
                             {{stage['name']['kr']}}
                         </div>
-                        <GameTable :answer="stage['solution']"></GameTable>
+                        <GameTable :answer="stage['solution']"/>
                     </div>
-                    <div :style="`width:92vw;height:92vw;`" v-else
+                    <div class="stage-wrapper" v-else
                         @click="$router.push(`/nonogram/${type}/${index+1}`)" >
-                        <div style="text-align:center;font-size:2rem;">
+                        <div class="stage-title">
                             {{notClearedTitle(stage['name']['kr'].length)}}
                         </div>
-                        <GameTable :answer="[]"></GameTable>
-
+                        <GameTable :answer="[[true]]"/>
                     </div>
                 </v-col>
 
@@ -83,9 +82,6 @@ export default {
             return this.$store.getters.stages
         },
     },
-    created(){
-        console.log(this.stagesStatus)
-    },
     methods:{
         notClearedTitle(length){
             let title = ""
@@ -103,6 +99,15 @@ export default {
 
 .stages-container{
     height:50vh;
+}
+.stage-wrapper{
+    width:92vw;
+    height:92vw;
+}
+.stage-title{
+    text-align:center;
+    font-size:2rem;
 
 }
+
 </style>
