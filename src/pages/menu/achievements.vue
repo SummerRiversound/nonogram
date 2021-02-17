@@ -18,11 +18,12 @@
 
             </v-col>
         </v-row>
-        <perfect-scrollbar :style="{height:'70vh'}">
-            <v-row class="ma-0 mt-0">
+        <perfect-scrollbar :style="{height:'65vh'}">
+            <v-row class="ma-0 mt-0" :key="refresh">
                 <v-col>
                     <v-list>
                     <div v-for="(achieve, index) in achievements" :key="`achidevement-${index}`">
+                        <v-divider></v-divider>
                         <v-list-item style="height:66px">
                             <span>
                                 <v-img v-if="achievementsStatus[index]" height="60" width="60" contain src="@/assets/achievements/img/2.png"></v-img>
@@ -32,7 +33,7 @@
 
                         </v-list-item>
                         <div class="achieve-detail">{{achieve.detail}}</div>
-                        <v-divider></v-divider>
+
                     </div>
                 </v-list>
                 </v-col>
@@ -53,7 +54,8 @@ export default {
     data(){
         return{
             typeIndex:0,
-            achievements:Achievements
+            achievements:Achievements,
+            refresh:0
         }
     },
     computed: {
@@ -62,8 +64,8 @@ export default {
         },
     },
     mounted(){
-
         this.$bus.$emit("checkAchievement", 6)
+        this.refresh++
     }
 }
 </script>

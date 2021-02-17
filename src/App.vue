@@ -6,9 +6,9 @@
       mode="out-in"
       @beforeLeave="beforeLeave"
       @enter="enter">
-      <!-- <keep-alive include="Stages"> -->
+      <keep-alive include="Stages">
         <router-view :w="appWidth" :h="appHeight"/>
-      <!-- </keep-alive> -->
+      </keep-alive>
       </transition>
       <achievements-listner/>
       <loading-indicator/>
@@ -65,6 +65,7 @@ export default {
   -webkit-user-select: none;
   user-select: none;
 }
+
 
 
 .fade-enter-active,

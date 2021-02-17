@@ -9,7 +9,7 @@
                     <v-spacer />
                     {{'SELECT STAGES'}}
                     <v-spacer></v-spacer>
-                    <v-btn icon>
+                    <v-btn icon @click="settingDialog=true">
                         <v-icon>mdi-cog</v-icon>
                     </v-btn>
                 </v-app-bar>
@@ -53,6 +53,9 @@
 
             </v-row>
         </perfect-scrollbar>
+        <v-dialog v-model="settingDialog" fullscreen transition="fade">
+            <Settings></Settings>
+        </v-dialog>
     </v-container>
 </template>
 
@@ -60,20 +63,23 @@
 import { PerfectScrollbar } from 'vue2-perfect-scrollbar'
 import 'vue2-perfect-scrollbar/dist/vue2-perfect-scrollbar.css'
 
+import Settings from '@/pages/menu/settings'
 import GameTable from './components/GameTable-mini'
 import Stages from '@/assets/stages'
 export default {
     name:'Stages',
     components:{
         GameTable,
-        PerfectScrollbar
+        PerfectScrollbar,
+        Settings
     },
     data(){
 
         return{
             stages: Stages,
             typeIndex:0,
-            refresh:0
+            refresh:0,
+            settingDialog:false
         }
     },
     created(){

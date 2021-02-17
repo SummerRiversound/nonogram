@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import App from './App'
-import '@/plugins/axios'
+// import '@/plugins/axios'
 import router from '@/plugins/router'
 import { store } from '@/plugins/store'
 import * as Global from '@/plugins/util/global'

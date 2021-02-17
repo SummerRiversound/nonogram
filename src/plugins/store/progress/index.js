@@ -24,6 +24,9 @@ const progress = {
         },
         setStageClear({ commit }, {type, index}) {
             return commit('setStageClear', {type, index})
+        },
+        resetUserPlayHistory({ commit }) {
+            return commit("resetUserPlayHistory")
         }
     },
     getters: {
@@ -40,6 +43,10 @@ const progress = {
         },
         setStageClear(state, { type, index }) {
             state.stages[type][index] = true
+        },
+        resetUserPlayHistory(state) {
+            state.achievements = fillAchievements()
+            state.stages = fillStages()
         }
     }
 }

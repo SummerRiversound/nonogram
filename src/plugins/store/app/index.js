@@ -27,10 +27,16 @@ const app = {
             return commit('setToast', payload)
         },
         removeToast({ commit }) {
-            return commit('setToast', { show: false })
+            return commit('setToast')
         },
         toggleSoundSetting({ commit }) {
             return commit('toggleSoundSetting')
+        },
+        toggleVibrateSetting({ commit }) {
+            return commit('toggleVibrateSetting')
+        },
+        resetAppSetting({ commit }) {
+            return commit('resetAppSetting')
         }
     },
     getters: {
@@ -66,6 +72,15 @@ const app = {
         },
         toggleSoundSetting(state) {
             state.sound = !state.sound
+        },
+        toggleVibrateSetting(state) {
+            state.vibrate = !state.vibrate
+        },
+        resetAppSetting(state) {
+            state.sound = true
+            state.vibrate = true
+            state.loading = false
+            state.toast= resetToast
         }
     }
 }

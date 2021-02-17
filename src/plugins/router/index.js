@@ -16,7 +16,7 @@ import Settings from '@/pages/menu/settings'
 Vue.use(VueRouter)
 
 const router = new VueRouter({
-    mode: 'history',
+    mode: 'hash',
     base: process.env.BASE_URL,
     routes: [{
             path: '/not-found',
@@ -56,18 +56,18 @@ const router = new VueRouter({
     ]
 })
 
-router.beforeEach(async (to, from, next) => {
-    if( from == to ) return
-    let found = router.options.routes.some(r => {
-        return r.name === to.name
-    })
+// router.beforeEach(async (to, from, next) => {
+//     if( from == to ) return
+//     let found = router.options.routes.some(r => {
+//         return r.name === to.name
+//     })
 
-    if (!found) {
-        next('/not-found')
-        return
-    }
+//     if (!found) {
+//         next('/not-found')
+//         return
+//     }
 
-    next()
-})
+//     next()
+// })
 
 export default router

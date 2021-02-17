@@ -9,7 +9,7 @@
                     <v-spacer />
                     <h2 class="timecode">{{timecode}}</h2>
                     <v-spacer></v-spacer>
-                    <v-btn icon>
+                    <v-btn icon @click="$router.push('/settings')">
                         <v-icon>mdi-cog</v-icon>
                     </v-btn>
                 </v-app-bar>

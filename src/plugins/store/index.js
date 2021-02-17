@@ -13,6 +13,6 @@ export const store = new Vuex.Store({
         Progress
     },
     plugins: [createPersistedState(
-        {paths:["Progress"]}
+        {paths:["Progress","AppState"]}
     )],
 })

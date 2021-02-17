@@ -118,13 +118,3 @@ export const checkDevice = {
         }
     }
 }
-
-export const achievementListner = {
-    install(Vue) {
-        Vue.prototype.$clearAchieve = {
-            clear(index) {
-                $store.dispatch("setAchievementClear", index)
-            }
-        }
-    }
-}
