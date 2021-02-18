@@ -16,6 +16,7 @@ const app = {
         },
         sound: true,
         vibrate: true,
+        tutorial: false
 
     },
     actions: {
@@ -27,7 +28,7 @@ const app = {
             return commit('setToast', payload)
         },
         removeToast({ commit }) {
-            return commit('setToast')
+            return commit('removeToast')
         },
         toggleSoundSetting({ commit }) {
             return commit('toggleSoundSetting')
@@ -37,6 +38,9 @@ const app = {
         },
         resetAppSetting({ commit }) {
             return commit('resetAppSetting')
+        },
+        setTutorial({ commit }) {
+            return commit('toggleTutorial')
         }
     },
     getters: {
@@ -51,6 +55,9 @@ const app = {
         },
         vibrate(state) {
             return state.vibrate
+        },
+        tutorial(state) {
+            return state.tutorial
         }
     },
     mutations: {
@@ -61,12 +68,25 @@ const app = {
             state.loading = payload;
         },
         setToast(state, payload) {
-            state.toast = resetToast
+            state.toast = {
+                message: null,
+                type: null,
+                color: null,
+                show: false,
+            }
             if (!payload) return
             if (payload.type !== undefined) state.toast.type = payload.type
             if (payload.message !== undefined) state.toast.message = payload.message
             if (payload.show !== undefined) state.toast.show = payload.show
             if (payload.color !== undefined) state.toast.color = payload.color
+        },
+        removeToast(state) {
+            state.toast = {
+                message: null,
+                type: null,
+                color: null,
+                show: false,
+            }
         },
         toggleSoundSetting(state) {
             state.sound = !state.sound
@@ -78,7 +98,11 @@ const app = {
             state.sound = true
             state.vibrate = true
             state.loading = false
-            state.toast= resetToast
+            state.toast = resetToast
+            state.tutorial = false
+        },
+        toggleTutorial(state) {
+            state.tutorial = true
         }
     }
 }

@@ -12,6 +12,7 @@ import Nonogram from '@/pages/nonogram'
 import Stages from '@/pages/menu/stages'
 import Achievements from '@/pages/menu/achievements'
 import Settings from '@/pages/menu/settings'
+import Tutorial from '@/pages/menu/tutorial'
 
 Vue.use(VueRouter)
 
@@ -52,6 +53,11 @@ const router = new VueRouter({
             path: '/achievements',
             name: 'Achievements',
             component: Achievements
+        },
+                {
+            path: '/tutorial',
+            name: 'Tutorial',
+            component: Tutorial
         },
     ]
 })

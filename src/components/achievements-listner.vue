@@ -25,10 +25,12 @@ export default {
                 console.log(target_i,"여기도 들어옴")
                 this.$store.dispatch("setAchievementClear", target_i)
                 this.$toast.success(`'${Achievements[target_i].name.kr}' 달성`)
+                this.$sounds.achieve()
             }
             if(target_i>0 && Achievements[target_i].func(this.stagesStatus)){
                 this.$store.dispatch("setAchievementClear", target_i)
                 this.$toast.success(`'${Achievements[target_i].name.kr}' 달성`)
+                this.$sounds.achieve()
             }
 
         },

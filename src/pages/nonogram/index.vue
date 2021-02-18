@@ -65,7 +65,7 @@
                 </v-row>
                 <v-row class="card-contents">
                     <v-col col=12 sm=12>
-                        <h5>클리어에 실패하였습니다<br>다시 도전할까요?</h5>
+                        <h5>세번이상 틀리어 클리어에 실패하였습니다<br>다시 도전할까요?</h5>
                     </v-col>
                 </v-row>
                 <v-row class="ma-0 pa-0 text-center">
@@ -122,6 +122,15 @@ export default {
     watch:{
         drawmode(newval){
             console.log(newval)
+        },
+        warning(newval){
+            if(newval) this.$sounds.warning()
+        },
+        complete(newval){
+            if(newval) this.$sounds.clear()
+        },
+        failed(newval){
+            if(newval) this.$sounds.failed()
         }
     },
     methods:{
@@ -136,6 +145,7 @@ export default {
             }
             this.$store.dispatch("setStageClear",payload)
             this.$bus.$emit("checkAchievement", 0)
+
             if(payload.type==5){
                 this.$bus.$emit("checkAchievement", 1)
             }
@@ -164,11 +174,12 @@ export default {
                 const sec = (allSec%60).toString().length==2 ?(allSec%60).toString():'0'+(allSec%60).toString()
                 this.timecode = `${min} : ${sec}`
                 time -= 1000
-                if(time<0 || this.complete) {
-                    if(time<0)  this.$bus.$emit("checkAchievement", 4)
-
+                if(time<0){
+                    this.$bus.$emit("checkAchievement", 4)
+                    this.failed=true
                     clearInterval(interval)
-                    }
+                }
+                if( this.complete) clearInterval(interval)
             },1000)
         },
         runCounterForAchievement(){

@@ -75,7 +75,7 @@ export default {
         }
     },
     mounted(){
-        this.$bus.$emit("checkAchievement", 7)
+        if(this.$route.path=='/settings') this.$bus.$emit("checkAchievement", 7)
     },
     methods:{
         resetApplication(){

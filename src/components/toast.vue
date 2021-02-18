@@ -1,7 +1,7 @@
 <template>
         <v-snackbar
         @click="removeToast"
-        :timeout="toast.type=='loading'?-1:3000"
+        :timeout="toast.type=='loading'?-1:5000"
         :color="toast.color"
         elevation="5"
         tile

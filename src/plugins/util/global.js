@@ -6,24 +6,57 @@ export const Sounds = {
         const sourcePath = {
             success: require('@/assets/sounds/se/success_1.wav'),
             miss:  require('@/assets/sounds/se/miss.wav'),
-            exclude: require('@/assets/sounds/se/exclude.wav')
+            exclude: require('@/assets/sounds/se/exclude.wav'),
+            clear: require('@/assets/sounds/se/clear.wav'),
+            fanfare: require('@/assets/sounds/se/fanfare.wav'),
+            failed: require('@/assets/sounds/se/failed.wav'),
+            achieve: require('@/assets/sounds/se/achieve.wav'),
+            warning: require('@/assets/sounds/se/warning.wav')
         }
         Vue.prototype.$sounds = {
             success() {
                 if(!$store.getters.sound) return
                 new Audio(sourcePath.success).play()
+                if(!$store.getters.vibrate) return
                 navigator.vibrate(30)
             },
             miss() {
                 if(!$store.getters.sound) return
                 new Audio(sourcePath.miss).play()
+                if(!$store.getters.vibrate) return
                 navigator.vibrate(50)
             },
             exclude() {
                 if(!$store.getters.sound) return
                 new Audio(sourcePath.exclude).play()
+                if(!$store.getters.vibrate) return
                 navigator.vibrate(10)
             },
+            clear() {
+                if (!$store.getters.sound) return
+                new Audio(sourcePath.fanfare).play()
+                setTimeout(() => { new Audio(sourcePath.clear).play()},500)
+                if(!$store.getters.vibrate) return
+                navigator.vibrate(500)
+            },
+            warning() {
+                if(!$store.getters.sound) return
+                new Audio(sourcePath.warning).play()
+                if(!$store.getters.vibrate) return
+                navigator.vibrate(200)
+            },
+            failed() {
+                if(!$store.getters.sound) return
+                new Audio(sourcePath.failed).play()
+                if(!$store.getters.vibrate) return
+                navigator.vibrate(200)
+            },
+            achieve() {
+                if(!$store.getters.sound) return
+                new Audio(sourcePath.achieve).play()
+                if(!$store.getters.vibrate) return
+                navigator.vibrate(50)
+            }
         }
     }
 }

@@ -86,9 +86,11 @@ export default {
         })
     },
     created(){
+        if(!this.hasPlayTutorial) this.$router.push('/tutorial')
         this.typeIndex = this.celltype
     },
     mounted(){
+
         try{
             if(this.prevRoute.params.stage_id){
                 this.$refs[`stage-${this.prevRoute.params.stage_id-1}`][0].focus()
@@ -108,6 +110,9 @@ export default {
         celltype(){
             return (this.$route.params.celltype/5)-1
         },
+        hasPlayTutorial() {
+            return this.$store.getters.tutorial
+        }
     },
     methods:{
         notClearedTitle(length){
