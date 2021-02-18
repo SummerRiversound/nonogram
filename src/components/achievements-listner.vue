@@ -19,8 +19,10 @@ export default {
     },
     methods:{
         checkAchievement(target_i){
+            console.log(target_i,"여기는 들어옴")
             if(this.achievementsStatus[target_i]) return
-            if(target_i>3 && Achievements[target_i].func()){
+            if((target_i>3 || target_i==0)&& Achievements[target_i].func()){
+                console.log(target_i,"여기도 들어옴")
                 this.$store.dispatch("setAchievementClear", target_i)
                 this.$toast.success(`'${Achievements[target_i].name.kr}' 달성`)
             }
@@ -28,6 +30,7 @@ export default {
                 this.$store.dispatch("setAchievementClear", target_i)
                 this.$toast.success(`'${Achievements[target_i].name.kr}' 달성`)
             }
+
         },
     }
 }

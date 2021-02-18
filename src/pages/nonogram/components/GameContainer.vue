@@ -143,6 +143,7 @@ export default {
             }
             answer[row][col] = 2
             this.$sounds.miss()
+            this.$emit("dropLifeCount")
         },
         removeOrExclude(row, col, answer){
             this.$sounds.exclude()

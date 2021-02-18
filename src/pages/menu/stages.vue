@@ -9,7 +9,7 @@
                     <v-spacer />
                     {{'SELECT STAGES'}}
                     <v-spacer></v-spacer>
-                    <v-btn icon @click="settingDialog=true">
+                    <v-btn icon @click="setting=true">
                         <v-icon>mdi-cog</v-icon>
                     </v-btn>
                 </v-app-bar>
@@ -31,31 +31,29 @@
             </v-col>
         </v-row>
         <perfect-scrollbar :style="{height:'70vh'}">
-            <v-row class="ma-0 mt-0" v-if="!!(type)" :key="refresh">
-                <v-col v-for="(stage, index) in stages[type]" :key="`stage-${index}`" class="mt-10"
+            <v-row class="ma-0 mt-0 " v-if="!!(type)">
+                <v-col v-for="(stage, index) in stages[type]" :key="`stage-${index}`"  class="mt-10 stages-wrapper"
                     min-width="100">
 
-                    <div class="stage-wrapper" v-if="stagesStatus[type][index]"
+                    <div class="stage-wrapper" v-if="stagesStatus[type][index]" :ref="`stage-${index}`" tabindex="0"
                         @click="$router.push(`/nonogram/${type}/${index+1}`)" >
                         <div class="stage-title">
                             {{stage['name']['kr']}}
                         </div>
-                        <GameTable :answer="stage['solution']"/>
+                        <GameTable :answer="stage['solution']" :key="refresh"/>
                     </div>
                     <div class="stage-wrapper" v-else
-                        @click="$router.push(`/nonogram/${type}/${index+1}`)" >
+                        @click="$router.push(`/nonogram/${type}/${index+1}`)" :ref="`stage-${index}`" tabindex="0">
                         <div class="stage-title">
                             {{notClearedTitle(stage['name']['kr'].length)}}
                         </div>
-                        <GameTable :answer="[[true]]"/>
+                        <GameTable :answer="[[true]]" :key="refresh"/>
                     </div>
                 </v-col>
 
             </v-row>
         </perfect-scrollbar>
-        <v-dialog v-model="settingDialog" fullscreen transition="fade">
-            <Settings></Settings>
-        </v-dialog>
+        <InGameSetting @close="setting=false" :setting="setting"/>
     </v-container>
 </template>
 
@@ -63,7 +61,7 @@
 import { PerfectScrollbar } from 'vue2-perfect-scrollbar'
 import 'vue2-perfect-scrollbar/dist/vue2-perfect-scrollbar.css'
 
-import Settings from '@/pages/menu/settings'
+import InGameSetting from '@/pages/menu/InGameSetting'
 import GameTable from './components/GameTable-mini'
 import Stages from '@/assets/stages'
 export default {
@@ -71,22 +69,34 @@ export default {
     components:{
         GameTable,
         PerfectScrollbar,
-        Settings
+        InGameSetting
     },
     data(){
 
         return{
+            setting: false,
             stages: Stages,
             typeIndex:0,
             refresh:0,
-            settingDialog:false
         }
+    },
+    beforeRouteEnter(to, from, next){
+        next(vm=> {
+            vm.prevRoute = from
+        })
     },
     created(){
         this.typeIndex = this.celltype
     },
     mounted(){
-        this.refresh++
+        try{
+            if(this.prevRoute.params.stage_id){
+                this.$refs[`stage-${this.prevRoute.params.stage_id-1}`][0].focus()
+            }
+        } catch(e){
+            console.log(e)
+        }
+        // this.refresh++
     },
     computed:{
         type(){
@@ -112,7 +122,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 
 .stages-container{
     height:50vh;
@@ -124,7 +134,12 @@ export default {
 .stage-title{
     text-align:center;
     font-size:2rem;
-
+}
+.stages-wrapper{
+    transform: scale(0.8)
+}
+div:focus{
+    outline:0;
 }
 
 </style>

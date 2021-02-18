@@ -61,10 +61,8 @@ const app = {
             state.loading = payload;
         },
         setToast(state, payload) {
-            if (!payload) {
-                state.toast = resetToast
-                return
-            }
+            state.toast = resetToast
+            if (!payload) return
             if (payload.type !== undefined) state.toast.type = payload.type
             if (payload.message !== undefined) state.toast.message = payload.message
             if (payload.show !== undefined) state.toast.show = payload.show

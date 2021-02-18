@@ -1,11 +1,11 @@
 <template>
         <v-snackbar
-        @input="removeToast"
+        @click="removeToast"
         :timeout="toast.type=='loading'?-1:3000"
         :color="toast.color"
         elevation="5"
         tile
-        :value="toast.show">
+        v-model="toast.show">
         {{toast.message}}
         </v-snackbar>
 </template>
@@ -17,18 +17,9 @@ export default {
             return this.$store.getters.toast
         },
     },
-    watch:{
-        // toast() {
-        //     console.log("없어짐")
-        //     this.removeToast()
-        // }
-    },
     methods:{
-        removeToast(obj){
-            console.log(obj)
-            console.log("클릭됨")
+        removeToast(){
             this.$store.dispatch("removeToast")
-            console.log(this.toast)
         }
     }
 
