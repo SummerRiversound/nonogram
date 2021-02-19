@@ -130,7 +130,14 @@ export default {
             if(newval) this.$sounds.clear()
         },
         failed(newval){
-            if(newval) this.$sounds.failed()
+            if(newval) {
+                this.$sounds.failed()
+                try{
+                    window.AdsMobFlutter.postMessage('call');
+                } catch(e){
+                    console.log(e)
+                }
+            }
         }
     },
     methods:{
@@ -192,7 +199,6 @@ export default {
             },1000)
         },
         dropLifeCount(){
-            console.log(this.life)
             if(this.life){
                 this.life --
                 if(!this.life){
@@ -200,10 +206,7 @@ export default {
                 }
 
             }
-
-
         }
-
     }
 
 }
