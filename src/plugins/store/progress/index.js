@@ -16,7 +16,8 @@ function fillStages() {
 const progress = {
     state: {
         achievements: fillAchievements(),
-        stages: fillStages()
+        stages: fillStages(),
+        tutorial: false
     },
     actions: {
         setAchievementClear({commit}, index) {
@@ -27,6 +28,9 @@ const progress = {
         },
         resetUserPlayHistory({ commit }) {
             return commit("resetUserPlayHistory")
+        },
+        setTutorial({ commit }) {
+            return commit('toggleTutorial')
         }
     },
     getters: {
@@ -36,6 +40,9 @@ const progress = {
         stages(state) {
             return state.stages
         },
+        tutorial(state) {
+            return state.tutorial
+        }
     },
     mutations: {
         setAchievementClear(state, index) {
@@ -47,6 +54,10 @@ const progress = {
         resetUserPlayHistory(state) {
             state.achievements = fillAchievements()
             state.stages = fillStages()
+            state.tutorial = false
+        },
+        toggleTutorial(state) {
+            state.tutorial = true
         }
     }
 }

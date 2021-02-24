@@ -34,14 +34,6 @@ export default [
         },
         {
             name: {
-                kr:"시간이 너무 모잘라요..",
-                en:"X",
-            },
-            detail: '정해진 시간 초과',
-            func: ()=>true
-        },
-        {
-            name: {
                 kr:"게임 켜놓고 까먹으신거 아니죠?",
                 en:"X",
             },

@@ -16,7 +16,7 @@ const app = {
         },
         sound: true,
         vibrate: true,
-        tutorial: false
+
 
     },
     actions: {
@@ -38,9 +38,6 @@ const app = {
         },
         resetAppSetting({ commit }) {
             return commit('resetAppSetting')
-        },
-        setTutorial({ commit }) {
-            return commit('toggleTutorial')
         }
     },
     getters: {
@@ -56,9 +53,6 @@ const app = {
         vibrate(state) {
             return state.vibrate
         },
-        tutorial(state) {
-            return state.tutorial
-        }
     },
     mutations: {
         setLoading(state, payload) {
@@ -99,11 +93,8 @@ const app = {
             state.vibrate = true
             state.loading = false
             state.toast = resetToast
-            state.tutorial = false
         },
-        toggleTutorial(state) {
-            state.tutorial = true
-        }
+
     }
 }
 
