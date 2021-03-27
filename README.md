@@ -2,7 +2,7 @@
 stacks: vue2, vuerouter, axios, vuex, vuetify
 
 tranditional Nonogram game with vuejs 2    
-[DEMO](https://summerriversound.github.io/pre_intro/nemonem)
+[DEMO](https://summerriversound.github.io/pre_intro/nemonemo)
 ## Usage
 
 **This project is still deveoping**
